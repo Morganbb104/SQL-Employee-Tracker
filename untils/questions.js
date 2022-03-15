@@ -18,11 +18,11 @@ const Start_Q = [{
 const addEmployee = (roles, managers) => {
     return [
         {
-            name: 'firstName',
+            name: 'first_name',
             type: 'input',
             message: `type employee's first name`
         }, {
-            name: 'lastName',
+            name: 'last_name',
             type: 'input',
             message: `type employee's last name?`
         }, {
@@ -65,7 +65,7 @@ const addRole = (departments) => {
 }
 
 const addDepartment = [{
-        name: 'departmentName',
+        name: 'department_name',
         type: 'input',
         message: `What is the name of the department?`
     }];

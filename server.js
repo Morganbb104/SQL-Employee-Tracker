@@ -23,7 +23,7 @@ db.connect((err) => {
   );
 
 // importing questions for inquirer
-const {Start_Q, addEmployee, addRole, addDepartment} = require('./untils/questions.js');
+const {Start_Q, addEmployee, addRole, addDepartment, } = require('./untils/questions.js');
 // dotenv.config();
 
 function start() {
@@ -163,50 +163,67 @@ function viewDepartments() {
 
 function addEmployeeFunc() {
     console.log('add new employee')
-    // let request = "SELECT * FROM employee "
+    let request = "SELECT * FROM employee;"
+    const roleRequest = 'SELECT * FROM roles;'
     console.log('request')
-    // db.query(request,function(err,res){
+    db.query(request,function(err,res){
         console.log("this is query")
-    // if (err) throw err;
-    // let department = res.map((x)=>({name:x.department_name,value:x.id}))
-    inquirer.prompt (addEmployee) // from untilis/ const addEmployee
-    .then(function (response) {
-        db.query('INSERT INTO employee(first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)', 
-        [response.first_name, response.last_name, response.role_id, response.manager_id]), function(err,res) {
-            if (err) throw err;
-            console.table(res);
-            inquirer.prompt([
-                {
-                    type: 'list',
-                    name: 'choice',
-                    message: 'select an option.',
-                    choices: [
-                        'Main Menu',
-                        'Quit'
-                    ]
-                }
-            ])
-           .then((answer) => {
-               switch (answer.choice){
-                   case 'Main Menu':
-                       start();
-                       break;
-                       case 'Quit':
-                           Quit();
-                           break;
-               }
-           })
-        }
+        if (err) throw err;
+        let employees = res.map((x)=>({name:`${x.first_name} ${x.last_name}`, value: x.id}))
+
+        db.query(roleRequest, (err, res) => {
+            const roles = res.map(x => ({name: x.title, value: x.id}))
+            let addEmployeeQuestions = addEmployee(roles, employees)
+            inquirer.prompt (addEmployeeQuestions) // from untilis/ const addEmployee
+                .then(function (response) {
+
+                    const insertEmployeeQuery = 'INSERT INTO employee(first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)';
+
+                    db.query(
+                        insertEmployeeQuery, 
+                        [response.first_name, response.last_name, response.role, response.manager], 
+                        function(err,res) {
+                            if (err) throw err;
+                            // console.table(res);
+                            inquirer.prompt([
+                                {
+                                    type: 'list',
+                                    name: 'choice',
+                                    message: 'select an option.',
+                                    choices: [
+                                        'Main Menu',
+                                        'Quit'
+                                    ]
+                                }
+                            ])
+                            .then((answer) => {
+                                switch (answer.choice){
+                                    case 'Main Menu':
+                                        start();
+                                        break;
+                                        case 'Quit':
+                                            Quit();
+                                            break;
+                                }
+                            })
+                        }
+                    )
+                })
+
+        })
+
+
     })
+
 }
 
 
 function  addRoleFunc() {
-    console.log('add new role')
+    // console.log('add new role')
     let request = "SELECT * FROM department";
-    console.log("request")
+    // console.log("request")
     db.query(request,function(err,res){
-        console.log("this is query")
+        // console.log("this is query")
     if (err) throw err;
     // console.log(res)
     let department = res.map((x)=>({name:x.department_name,value:x.id}))
@@ -251,12 +268,11 @@ function  addDepartmentFunc() {
     console.log('add new department')
     let request = "SELECT * FROM department"
     console.log(request)
-    // inquirer.prompt (addDepartment) // from untilis/ const addDepartment
+    inquirer.prompt (addDepartment) // from untilis/ const addDepartment
     .then(function (response) {
         db.query('INSERT INTO department(department_name) VALUES (?)', 
         response.department_name, function(err,res) {
             if (err) throw err;
-            console.table(res);
             inquirer.prompt([
                 {
                     type: 'list',
