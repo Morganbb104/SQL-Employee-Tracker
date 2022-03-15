@@ -163,9 +163,15 @@ function viewDepartments() {
 
 function addEmployeeFunc() {
     console.log('add new employee')
+    // let request = "SELECT * FROM employee "
+    console.log('request')
+    // db.query(request,function(err,res){
+        console.log("this is query")
+    // if (err) throw err;
+    // let department = res.map((x)=>({name:x.department_name,value:x.id}))
     inquirer.prompt (addEmployee) // from untilis/ const addEmployee
     .then(function (response) {
-        connection.query('INSERT INTO employee(first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)', 
+        db.query('INSERT INTO employee(first_name, last_name, roles_id, manager_id) VALUES (?,?,?,?)', 
         [response.first_name, response.last_name, response.role_id, response.manager_id]), function(err,res) {
             if (err) throw err;
             console.table(res);
@@ -196,7 +202,7 @@ function addEmployeeFunc() {
 
 
 function  addRoleFunc() {
-    console.log('add new employee')
+    console.log('add new role')
     let request = "SELECT * FROM department";
     console.log("request")
     db.query(request,function(err,res){
@@ -212,7 +218,8 @@ function  addRoleFunc() {
         db.query('INSERT INTO roles(title, salary, department_id) VALUES (?,?,?)', 
         [ response.title, response.salary, response.department_id], function(err,res) {
             if (err) throw err;
-            console.table(res);
+            // console.table(res);
+            // console.table(err);
             inquirer.prompt([
                 {
                     type: 'list',
@@ -241,8 +248,10 @@ function  addRoleFunc() {
 
 
 function  addDepartmentFunc() {
-    console.log('add new employee')
-    inquirer.prompt (addDepartment) // from untilis/ const addDepartment
+    console.log('add new department')
+    let request = "SELECT * FROM department"
+    console.log(request)
+    // inquirer.prompt (addDepartment) // from untilis/ const addDepartment
     .then(function (response) {
         db.query('INSERT INTO department(department_name) VALUES (?)', 
         response.department_name, function(err,res) {
