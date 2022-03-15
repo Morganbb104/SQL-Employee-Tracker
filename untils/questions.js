@@ -1,6 +1,6 @@
 const Start_Q = [
     {
-        name: 'what do you want',
+        name: 'choice',
         type: 'list',
         message: `What would you like to do here?`,
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add new department', 'Add new role', 'Add new employee', 'Update employee role', 'Exit'],
@@ -24,38 +24,40 @@ const addEmployee = [
         type: 'list',
         message: `What is the role of this employee?`,
         // connect roles from the db 
-        choices: [`${roles}`]
+        // choices: [`${roles}`]
     },
     {
         name: 'manager',
         type: 'list',
         message: `Who is this employee's manager?`,
         // connect employees with manager id from the db 
-        choices: ['None', `${managers}`]
+        // choices: ['None', `${managers}`]
     },
 ];
 
 
-const addRole = [
+const addRole =(departments) =>{
+    
+    return [
     {
-        name: 'roleName',
+        name: 'title',
         type: 'input',
         message: `What is the name of this role?`
     },
     {
-        name: 'lastName',
+        name: 'salary',
         type: 'input',
         message: `What is the salary of this role?`
     },
     {
-        name: 'department',
+        name: 'department_id',
         type: 'list',
         message: `Which department is this role belonging to?`,
         // connect departments from the db 
-        choices: [`${departments}`]
+        choices: departments
     }
 ];
-
+}
 
 const addDepartment = [
     {
