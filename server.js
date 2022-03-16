@@ -309,12 +309,12 @@ function updateEmployeeFunc() {
     let request = "SELECT * FROM employee;"
     // console.log(request)
 
-        db.query(
-            request,
-            function(err, res) {
-                if(err) throw err
-                let employeeList = res.map((x)=>({name:`${x.first_name} ${x.last_name}`, value: x.id}))
-                const updateEmployeeQuestions =  updateEmployee(employeeList);
+        // db.query(
+        //     request,
+        //     function(err, res) {
+        //         if(err) throw err
+        //         let employeeList = res.map((x)=>({name:`${x.first_name} ${x.last_name}`, value: x.id}))
+        //         const updateEmployeeQuestions =  updateEmployee(employeeList);
 
                 // inquirer 
                     // prompt employee list
@@ -331,8 +331,8 @@ function updateEmployeeFunc() {
                                     // [roleID, employeeID]
                                     // function
 
-            }
-        )
+        //     }
+        // )
 }
 
 function Quit() {
