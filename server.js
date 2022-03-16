@@ -23,7 +23,7 @@ db.connect((err) => {
   );
 
 // importing questions for inquirer
-const {Start_Q, addEmployee, addRole, addDepartment, } = require('./untils/questions.js');
+const {Start_Q, addEmployee, addRole, addDepartment, updateEmployee} = require('./untils/questions.js');
 // dotenv.config();
 
 function start() {
@@ -55,6 +55,11 @@ function start() {
 
                     addDepartmentFunc();
                     break;
+                case 'Update employee role':
+
+                    updateEmployeeFunc();
+                    break;
+
                 case 'Quit':
 
                     Quit();
@@ -298,6 +303,37 @@ function  addDepartmentFunc() {
     })
 }
 
+
+function updateEmployeeFunc() {
+    console.log('start updateEmployeeFunc')
+    let request = "SELECT * FROM employee;"
+    // console.log(request)
+
+        db.query(
+            request,
+            function(err, res) {
+                if(err) throw err
+                let employeeList = res.map((x)=>({name:`${x.first_name} ${x.last_name}`, value: x.id}))
+                const updateEmployeeQuestions =  updateEmployee(employeeList);
+
+                // inquirer 
+                    // prompt employee list
+                    // const employee = user choice
+
+                    // db.query select role
+                        // const roleList = map
+                        // inquirer 
+                            // prompt role list
+                            // const role = user choice
+                        
+                                // db.query update employee
+                                    // UPDATE employee SET role_id = (?) WHERE id = (?)
+                                    // [roleID, employeeID]
+                                    // function
+
+            }
+        )
+}
 
 function Quit() {
     console.log('Goodbye! see you!');

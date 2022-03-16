@@ -70,9 +70,21 @@ const addDepartment = [{
         message: `What is the name of the department?`
     }];
 
+const updateEmployee = (employeeList) => {
+    return [
+        {
+        name: 'update',
+        type: 'list',
+        message: 'Update Employee option',
+        choices: employeeList
+        }
+    ]
+};
+
 module.exports = {
     Start_Q,
     addEmployee,
     addRole,
-    addDepartment
+    addDepartment,
+    updateEmployee
 };
