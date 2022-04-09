@@ -70,15 +70,20 @@ const addDepartment = [{
         message: `What is the name of the department?`
     }];
 
-const updateEmployee = (employeeList) => {
+const updateEmployee = (employeeList, roleLists) => {
     return [
         {
-        name: 'update',
-        type: 'list',
-        message: 'Update Employee option',
-        choices: employeeList
+            name: 'update',
+            type: 'list',
+            message: 'Update Employee option',
+            choices: employeeList
+        }, {
+            name: 'role',
+            type: 'list',
+            message: 'Pick a new role',
+            choices: roleLists
         }
-    ]
+    ];
 };
 
 module.exports = {
