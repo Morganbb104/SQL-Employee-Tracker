@@ -10,7 +10,7 @@ const db = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "cchs8217291HCC", // remember to hide your pw
+    password: "", // remember to hide your pw
     database: "company"
 }, console.log('successfully connect to db'));
 db.connect((err) => {
